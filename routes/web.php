@@ -3,33 +3,26 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BeritaInformasiController;
 
-/*
-|--------------------------------------------------------------------------
-| USER / PUBLIC ROUTES
-|--------------------------------------------------------------------------
-*/
+// alihkan ke /admin
+Route::get('/', fn() => redirect('/admin'));
 
-// Dashboard user ➝ menampilkan berita
-Route::get('/dashboard', [BeritaInformasiController::class, 'dashboard'])->name('dashboard');
 
-// Halaman statis
-Route::view('/profile', 'Profile')->name('profile');
-Route::view('/dashboard', 'Dashboard')->name('dashboard.page');
-Route::view('/formulir', 'Formulir')->name('formulir');
-Route::view('/Pengaduan', 'Pengaduan')->name('Pengaduan');
-Route::view('/kepesertaan', 'Kepesertaan')->name('kepesertaan');
-Route::view('/Peraturan', 'Peraturan')->name('Peraturan');
-
-/*
-|--------------------------------------------------------------------------
-| ADMIN ROUTES
-|--------------------------------------------------------------------------
-*/
-
-// Admin dashboard ➝ daftar berita
+// alihkan ke /admin
 Route::get('/admin', [BeritaInformasiController::class, 'index'])->name('admin.index');
 
-// CRUD Berita khusus admin
+// halaman statis lain (biarin)
+Route::get('/profile', fn() => view('Profile'));
+Route::get('/formulir', fn() => view('formulir'))->name('formulir');
+Route::get('/Pengaduan', fn() => view('Pengaduan'))->name('Pengaduan');
+Route::get('/kepesertaan', fn() => view('kepesertaan'))->name('kepesertaan');
+Route::get('/Peraturan', fn() => view('Peraturan'))->name('Peraturan');
+
+// dashboard user (PAKAI CONTROLLER)
+Route::get('/', [BeritaInformasiController::class, 'dashboard']);
+Route::get('/dashboard', [BeritaInformasiController::class, 'dashboard'])->name('dashboard');
+
+// CRUD berita
+Route::resource('berita', BeritaInformasiController::class);
 Route::prefix('admin')->group(function () {
     Route::resource('berita', BeritaInformasiController::class);
 });
