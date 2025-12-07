@@ -1,37 +1,35 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BeritaInformasiController;
 
 /*
 |--------------------------------------------------------------------------
-| Web Routes
+| USER / PUBLIC ROUTES
 |--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
 */
 
-Route::get('/', function () {
-    return view('Dashboard');
-});
-Route::get('/dashboard', function () {
-    return view('Dashboard');
-});
+// Dashboard user ➝ menampilkan berita
+Route::get('/dashboard', [BeritaInformasiController::class, 'dashboard'])->name('dashboard');
 
-Route::get('/profile', function () {
-    return view('Profile');
+// Halaman statis
+Route::view('/profile', 'Profile')->name('profile');
+Route::view('/dashboard', 'Dashboard')->name('dashboard.page');
+Route::view('/formulir', 'Formulir')->name('formulir');
+Route::view('/Pengaduan', 'Pengaduan')->name('Pengaduan');
+Route::view('/kepesertaan', 'Kepesertaan')->name('kepesertaan');
+Route::view('/Peraturan', 'Peraturan')->name('Peraturan');
+
+/*
+|--------------------------------------------------------------------------
+| ADMIN ROUTES
+|--------------------------------------------------------------------------
+*/
+
+// Admin dashboard ➝ daftar berita
+Route::get('/admin', [BeritaInformasiController::class, 'index'])->name('admin.index');
+
+// CRUD Berita khusus admin
+Route::prefix('admin')->group(function () {
+    Route::resource('berita', BeritaInformasiController::class);
 });
-Route::get('/formulir', function () {
-    return view('formulir');
-})->name('formulir');
-Route::get('/Pengaduan', function () {
-    return view('Pengaduan');
-})->name('Pengaduan');
-Route::get('/kepesertaan', function () {
-    return view('kepesertaan');
-})->name('kepesertaan');
-Route::get('/Peraturan', function () {
-    return view('Peraturan');
-})->name('Peraturan');

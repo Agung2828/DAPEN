@@ -1152,89 +1152,57 @@
                     <p>Update Terkini Seputar Dana Pensiun</p>
                 </div>
 
+                <!-- TAB FILTER -->
                 <div class="news-tabs">
-                    <button class="news-tab active">Semua Berita</button>
-                    <button class="news-tab">Pengumuman</button>
-                    <button class="news-tab">Kegiatan</button>
-                    <button class="news-tab">Penghargaan</button>
+                    <button class="news-tab active" data-filter="semua">Semua Berita</button>
+                    <button class="news-tab" data-filter="pengumuman">Pengumuman</button>
+                    <button class="news-tab" data-filter="kegiatan">Kegiatan</button>
+                    <button class="news-tab" data-filter="penghargaan">Penghargaan</button>
                 </div>
 
+                <!-- GRID BERITA -->
                 <div class="news-grid">
-                    <div class="news-card">
-                        <div class="news-image1">
-                            <img src="{{ asset('image/penghargaan.jpg') }}" alt="Foto berita">
-                            <div class="news-date-badge">15 Nov 2025</div>
-                        </div>
-                        <div class="news-content">
-                            <div class="news-category">PENGHARGAAN</div>
-                            <h3 class="news-title">Apresiasi OJK untuk Kinerja Dana Pensiun 2024</h3>
-                            <p class="news-excerpt">Dana Pensiun Bank Riau Kepri menerima apresiasi dari Otoritas Jasa
-                                Keuangan atas kinerja pengelolaan dana yang optimal dan tata kelola yang baik sepanjang
-                                tahun 2024.</p>
-                            <a href="#" class="read-more">
-                                Baca Selengkapnya
-                                <i class="fas fa-arrow-right"></i>
-                            </a>
-                        </div>
-                    </div>
 
-                    <div class="news-card">
-                        <div class="news-image2">
-                            <div class="news-date-badge">10 Nov 2025</div>
-                        </div>
-                        <div class="news-content">
-                            <div class="news-category">KEGIATAN</div>
-                            <h3 class="news-title">Sosialisasi Program Pensiun Baru untuk Peserta</h3>
-                            <p class="news-excerpt">Kegiatan sosialisasi program pensiun yang dihadiri oleh seluruh
-                                peserta
-                                dan calon peserta dana pensiun untuk memberikan pemahaman mengenai hak dan kewajiban
-                                peserta.</p>
-                            <a href="#" class="read-more">
-                                Baca Selengkapnya
-                                <i class="fas fa-arrow-right"></i>
-                            </a>
-                        </div>
-                    </div>
+                    @foreach ($berita as $item)
+                        <div class="news-card tab-{{ strtolower($item->kategori) }}">
 
-                    <div class="news-card">
-                        <div class="news-image3">
-                            <div class="news-date-badge">5 Nov 2025</div>
-                        </div>
-                        <div class="news-content">
-                            <div class="news-category">LAPORAN</div>
-                            <h3 class="news-title">Publikasi Laporan Keuangan Q3 2025</h3>
-                            <p class="news-excerpt">Laporan keuangan triwulan ketiga tahun 2025 telah dipublikasikan
-                                dan
-                                dapat diunduh oleh seluruh peserta melalui website resmi Dana Pensiun Bank Riau Kepri.
-                            </p>
-                            <a href="#" class="read-more">
-                                Baca Selengkapnya
-                                <i class="fas fa-arrow-right"></i>
-                            </a>
-                        </div>
-                    </div>
+                            <!-- GAMBAR -->
+                            <div class="news-image1">
+                                @if ($item->foto)
+                                    <img src="{{ asset('storage/' . $item->foto) }}" alt="Foto Berita">
+                                @else
+                                    <img src="{{ asset('image/default.jpg') }}" alt="Foto Default">
+                                @endif
 
-                    <div class="news-card">
-                        <div class="news-image">
-                            <div class="news-date-badge">1 Nov 2025</div>
+                                <div class="news-date-badge">
+                                    {{ \Carbon\Carbon::parse($item->tanggal)->format('d M Y') }}
+                                </div>
+                            </div>
+
+                            <!-- KONTEN -->
+                            <div class="news-content">
+                                <div class="news-category">{{ strtoupper($item->kategori) }}</div>
+
+                                <h3 class="news-title">{{ $item->judul }}</h3>
+
+                                <p class="news-excerpt">
+                                    {{ \Illuminate\Support\Str::limit($item->deskripsi, 150) }}
+                                </p>
+
+                                <a href="#" class="read-more">
+                                    Baca Selengkapnya
+                                    <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+
                         </div>
-                        <div class="news-content">
-                            <div class="news-category">PENGUMUMAN</div>
-                            <h3 class="news-title">Perubahan Jam Operasional Layanan</h3>
-                            <p class="news-excerpt">Mulai 1 November 2025, jam operasional layanan Dana Pensiun Bank
-                                Riau
-                                Kepri berubah menjadi Senin-Jumat pukul 08:00-16:00 WIB untuk melayani peserta dengan
-                                lebih
-                                baik.</p>
-                            <a href="#" class="read-more">
-                                Baca Selengkapnya
-                                <i class="fas fa-arrow-right"></i>
-                            </a>
-                        </div>
-                    </div>
+                    @endforeach
+
                 </div>
             </div>
         </div>
+
+        <!-- SCRIPT FILTER -->
         <script>
             const tabs = document.querySelectorAll(".news-tab");
             const cards = document.querySelectorAll(".news-card");
@@ -1242,19 +1210,16 @@
             tabs.forEach(tab => {
                 tab.addEventListener("click", () => {
 
-                    // Hapus active
                     tabs.forEach(t => t.classList.remove("active"));
                     tab.classList.add("active");
 
-                    // Nama tab terpilih
-                    const selected = tab.textContent.trim().toLowerCase();
+                    let filter = tab.dataset.filter;
 
-                    // Filter kartu
                     cards.forEach(card => {
                         card.classList.remove("hidden");
 
-                        if (selected !== "semua berita") {
-                            if (!card.classList.contains("tab-" + selected)) {
+                        if (filter !== "semua") {
+                            if (!card.classList.contains("tab-" + filter)) {
                                 card.classList.add("hidden");
                             }
                         }
@@ -1262,6 +1227,7 @@
                 });
             });
         </script>
+
 
         <footer>
             <div class="container">
