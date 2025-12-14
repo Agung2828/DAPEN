@@ -225,302 +225,327 @@
                 <!-- GRID BERITA -->
                 <div class="news-grid">
                     @forelse ($berita as $item)
-                        <div class="news-card tab-{{ strtolower($item->kategori) }}">
+                        <<<<<<< HEAD <div class="news-card tab-{{ strtolower($item->kategori) }}">
                             <div class="news-image1">
                                 @php
                                     $fotoName = $item->foto ? basename(str_replace('\\', '/', $item->foto)) : null;
                                 @endphp
+                                =======
+                                <div class="news-card tab-{{ strtolower($item->kategori) }}" style="cursor:pointer;"
+                                    onclick="window.location.href='{{ route('berita.detail', $item->id) }}'">
+                                    <div class="news-image1">
+                                        @php
+                                            $fotoName = $item->foto
+                                                ? basename(str_replace('\\', '/', $item->foto))
+                                                : null;
+                                        @endphp
+                                        >>>>>>> 2d425991d87126f9cbf1a86484e95089fce05827
 
-                                @if ($fotoName)
-                                    <img src="{{ asset('uploads/berita/' . rawurlencode($fotoName)) }}"
-                                        alt="Foto Berita">
-                                @else
-                                    <img src="{{ asset('image/default.jpg') }}" alt="Foto Default">
-                                @endif
+                                        @if ($fotoName)
+                                            <img src="{{ asset('uploads/berita/' . rawurlencode($fotoName)) }}"
+                                                alt="Foto Berita">
+                                        @else
+                                            <img src="{{ asset('image/default.jpg') }}" alt="Foto Default">
+                                        @endif
 
-                                <div class="news-date-badge">
-                                    {{ \Carbon\Carbon::parse($item->tanggal)->format('d M Y') }}
+                                        <div class="news-date-badge">
+                                            {{ \Carbon\Carbon::parse($item->tanggal)->format('d M Y') }}
+                                        </div>
+                                    </div>
+
+                                    <div class="news-content">
+                                        <div class="news-category">{{ strtoupper($item->kategori) }}</div>
+                                        <h3 class="news-title">{{ $item->judul }}</h3>
+                                        <p class="news-excerpt">
+                                            {{ \Illuminate\Support\Str::limit($item->deskripsi, 150) }}
+                                        </p>
+                                        <a href="#" class="read-more">
+                                            Baca Selengkapnya <i class="fas fa-arrow-right"></i>
+                                        </a>
+                                    </div>
                                 </div>
+                                <<<<<<< HEAD=======<div class="news-content">
+                                    <div class="news-category">{{ strtoupper($item->kategori) }}</div>
+                                    <h3 class="news-title">{{ $item->judul }}</h3>
+                                    <p class="news-excerpt">
+                                        {{ \Illuminate\Support\Str::limit($item->deskripsi, 150) }}
+                                    </p>
+
+                                    {{-- ✅ LINK DETAIL --}}
+                                    <a href="{{ route('berita.detail', $item->id) }}" class="read-more"
+                                        onclick="event.stopPropagation();">
+                                        Baca Selengkapnya <i class="fas fa-arrow-right"></i>
+                                    </a>
                             </div>
+                </div>
+                >>>>>>> 2d425991d87126f9cbf1a86484e95089fce05827
+            @empty
+                <p style="padding:1rem; color:#666;">Belum ada berita yang ditambahkan.</p>
+                @endforelse
+            </div>
+    </div>
+    </section>
+    <style>
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
 
-                            <div class="news-content">
-                                <div class="news-category">{{ strtoupper($item->kategori) }}</div>
-                                <h3 class="news-title">{{ $item->judul }}</h3>
-                                <p class="news-excerpt">
-                                    {{ \Illuminate\Support\Str::limit($item->deskripsi, 150) }}
-                                </p>
-                                <a href="#" class="read-more">
-                                    Baca Selengkapnya <i class="fas fa-arrow-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                    @empty
-                        <p style="padding:1rem; color:#666;">Belum ada berita yang ditambahkan.</p>
-                    @endforelse
+        .news-card {
+            display: flex;
+            flex-direction: column;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .news-image1 {
+            position: relative;
+            width: 100%;
+            /* Gunakan padding-top untuk rasio gambar */
+            padding-top: 56.25%;
+            /* 16:9 ratio */
+            overflow: hidden;
+        }
+
+        .news-image1 img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* agar menutupi kotak tanpa distorsi */
+            display: block;
+        }
+
+        .news-date-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(255, 0, 0, 0.9);
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .news-content {
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .news-category {
+            color: #c00;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .news-title {
+            margin: 0.5rem 0;
+            font-size: 1.1rem;
+            line-height: 1.3;
+        }
+
+        .news-excerpt {
+            flex-grow: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .read-more {
+            color: #c00;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .read-more i {
+            margin-left: 5px;
+        }
+    </style>
+    <!-- Why Choose Section -->
+    <section class="why-choose">
+        <div class="container">
+            <h2 class="section-title" style="text-align: center;">Mengapa Memilih Dana Pensiun Bank Riau Kepri
+            </h2>
+            <p class="section-subtitle" style="text-align: center;">
+                Melayani lebih dari 25 tahun, Dana Pensiun Bank Riau Kepri senantiasa memberikan kemudahan dan
+                kecepatan
+                dalam merespon berbagai kebutuhan peserta dengan didukung oleh layanan yang prima
+            </p>
+
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h3 class="feature-title">Terpercaya & Aman</h3>
+                    <p class="feature-desc">Diawasi OJK dengan sistem keamanan berlapis untuk melindungi dana Anda
+                    </p>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fas fa-network-wired"></i></div>
+                    <h3 class="feature-title">Pengelolaan Profesional</h3>
+                    <p class="feature-desc">Tim ahli yang kompeten dan berpengalaman dalam mengelola dana pensiun
+                    </p>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fas fa-users"></i></div>
+                    <h3 class="feature-title">Layanan Prima</h3>
+                    <p class="feature-desc">Pelayanan terbaik untuk memenuhi kebutuhan peserta dengan responsif</p>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+                    <h3 class="feature-title">Investasi Optimal</h3>
+                    <p class="feature-desc">Pengelolaan investasi yang optimal untuk hasil maksimal dan
+                        berkelanjutan</p>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fas fa-balance-scale"></i></div>
+                    <h3 class="feature-title">Tata Kelola Baik</h3>
+                    <p class="feature-desc">Menerapkan prinsip tata kelola yang baik dan transparan</p>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fas fa-lightbulb"></i></div>
+                    <h3 class="feature-title">Terus Berinovasi</h3>
+                    <p class="feature-desc">Mengembangkan produk sesuai perkembangan untuk memenuhi kebutuhan
+                        peserta</p>
                 </div>
             </div>
-        </section>
-        <style>
-            .news-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-                gap: 1.5rem;
-            }
+        </div>
+    </section>
 
-            .news-card {
-                display: flex;
-                flex-direction: column;
-                background: #fff;
-                border-radius: 10px;
-                overflow: hidden;
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            }
+    <!-- Calculator Section -->
+    <section class="calculator-section" id="simulasiManfaat">
+        <h2 class="section-title">Simulasi Manfaat Pensiun</h2>
+        <p class="section-subtitle">Rumus Manfaat Pensiun = 2,5% x Masa Kerja x PhDP</p>
 
-            .news-image1 {
-                position: relative;
-                width: 100%;
-                /* Gunakan padding-top untuk rasio gambar */
-                padding-top: 56.25%;
-                /* 16:9 ratio */
-                overflow: hidden;
-            }
-
-            .news-image1 img {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                /* agar menutupi kotak tanpa distorsi */
-                display: block;
-            }
-
-            .news-date-badge {
-                position: absolute;
-                top: 10px;
-                left: 10px;
-                background: rgba(255, 0, 0, 0.9);
-                color: #fff;
-                padding: 5px 10px;
-                border-radius: 10px;
-                font-size: 0.8rem;
-                font-weight: bold;
-            }
-
-            .news-content {
-                padding: 1rem;
-                display: flex;
-                flex-direction: column;
-            }
-
-            .news-category {
-                color: #c00;
-                font-weight: bold;
-                font-size: 0.8rem;
-                text-transform: uppercase;
-            }
-
-            .news-title {
-                margin: 0.5rem 0;
-                font-size: 1.1rem;
-                line-height: 1.3;
-            }
-
-            .news-excerpt {
-                flex-grow: 1;
-                margin-bottom: 0.5rem;
-            }
-
-            .read-more {
-                color: #c00;
-                font-weight: bold;
-                text-decoration: none;
-                display: inline-flex;
-                align-items: center;
-            }
-
-            .read-more i {
-                margin-left: 5px;
-            }
-        </style>
-        <!-- Why Choose Section -->
-        <section class="why-choose">
-            <div class="container">
-                <h2 class="section-title" style="text-align: center;">Mengapa Memilih Dana Pensiun Bank Riau Kepri
-                </h2>
-                <p class="section-subtitle" style="text-align: center;">
-                    Melayani lebih dari 25 tahun, Dana Pensiun Bank Riau Kepri senantiasa memberikan kemudahan dan
-                    kecepatan
-                    dalam merespon berbagai kebutuhan peserta dengan didukung oleh layanan yang prima
-                </p>
-
-                <div class="features-grid">
-                    <div class="feature-item">
-                        <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
-                        <h3 class="feature-title">Terpercaya & Aman</h3>
-                        <p class="feature-desc">Diawasi OJK dengan sistem keamanan berlapis untuk melindungi dana Anda
-                        </p>
-                    </div>
-
-                    <div class="feature-item">
-                        <div class="feature-icon"><i class="fas fa-network-wired"></i></div>
-                        <h3 class="feature-title">Pengelolaan Profesional</h3>
-                        <p class="feature-desc">Tim ahli yang kompeten dan berpengalaman dalam mengelola dana pensiun
-                        </p>
-                    </div>
-
-                    <div class="feature-item">
-                        <div class="feature-icon"><i class="fas fa-users"></i></div>
-                        <h3 class="feature-title">Layanan Prima</h3>
-                        <p class="feature-desc">Pelayanan terbaik untuk memenuhi kebutuhan peserta dengan responsif</p>
-                    </div>
-
-                    <div class="feature-item">
-                        <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
-                        <h3 class="feature-title">Investasi Optimal</h3>
-                        <p class="feature-desc">Pengelolaan investasi yang optimal untuk hasil maksimal dan
-                            berkelanjutan</p>
-                    </div>
-
-                    <div class="feature-item">
-                        <div class="feature-icon"><i class="fas fa-balance-scale"></i></div>
-                        <h3 class="feature-title">Tata Kelola Baik</h3>
-                        <p class="feature-desc">Menerapkan prinsip tata kelola yang baik dan transparan</p>
-                    </div>
-
-                    <div class="feature-item">
-                        <div class="feature-icon"><i class="fas fa-lightbulb"></i></div>
-                        <h3 class="feature-title">Terus Berinovasi</h3>
-                        <p class="feature-desc">Mengembangkan produk sesuai perkembangan untuk memenuhi kebutuhan
-                            peserta</p>
-                    </div>
+        <div class="calculator-form">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Masa Kerja (Tahun)</label>
+                    <input type="number" id="masaKerjaInput" placeholder="Contoh: 25" step="0.01">
+                    <small style="color: #666; font-size: 0.85rem; margin-top: 0.5rem; display: block;">
+                        Akan otomatis terhitung jika tanggal diisi
+                    </small>
                 </div>
             </div>
-        </section>
 
-        <!-- Calculator Section -->
-        <section class="calculator-section" id="simulasiManfaat">
-            <h2 class="section-title">Simulasi Manfaat Pensiun</h2>
-            <p class="section-subtitle">Rumus Manfaat Pensiun = 2,5% x Masa Kerja x PhDP</p>
-
-            <div class="calculator-form">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Masa Kerja (Tahun)</label>
-                        <input type="number" id="masaKerjaInput" placeholder="Contoh: 25" step="0.01">
-                        <small style="color: #666; font-size: 0.85rem; margin-top: 0.5rem; display: block;">
-                            Akan otomatis terhitung jika tanggal diisi
-                        </small>
-                    </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Tanggal Jadi Peserta</label>
+                    <input type="date" id="joinDate">
                 </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Tanggal Jadi Peserta</label>
-                        <input type="date" id="joinDate">
-                    </div>
-                    <div class="form-group">
-                        <label>Tanggal Pensiun</label>
-                        <input type="date" id="retirementDate">
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Penghasilan Dasar Pensiun (PhDP)</label>
-                        <input type="text" id="phdp" placeholder="Contoh: 10000000">
-                        <small style="color: #666; font-size: 0.85rem; margin-top: 0.5rem; display: block;">
-                            PhDP = Gaji Pokok + Tunjangan Tetap
-                        </small>
-                    </div>
-                </div>
-
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                    <button onclick="resetForm()"
-                        style="background: linear-gradient(135deg, #ef5350 0%, #e53935 100%); color: white; padding: 1.2rem 3rem; border: none; border-radius: 50px; font-weight: 700; cursor: pointer; transition: all 0.3s; box-shadow: 0 8px 25px rgba(239, 83, 80, 0.3); font-size: 1.05rem;">
-                        <i class="fas fa-redo"></i> Reset
-                    </button>
-                    <button class="calculate-btn" onclick="calculatePension()">
-                        <i class="fas fa-calculator"></i> Hitung Estimasi
-                    </button>
-                </div>
-
-                <div class="result-box" id="resultBox" style="display: none;">
-                    <div class="result-label">Perkiraan Manfaat Pensiun Bulanan</div>
-                    <div class="result-value" id="resultValue">Rp 0</div>
-                    <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.3);">
-                        <p style="font-size: 0.9rem; opacity: 0.9; line-height: 1.6;">
-                            <strong>Rumus:</strong> 2,5% × Masa Kerja × PhDP<br>
-                            <span id="formulaDetail" style="font-size: 0.85rem; opacity: 0.8;"></span>
-                        </p>
-                    </div>
+                <div class="form-group">
+                    <label>Tanggal Pensiun</label>
+                    <input type="date" id="retirementDate">
                 </div>
             </div>
-        </section>
 
-        <script>
-            function scrollToCalculator() {
-                const targetElement = document.getElementById('simulasiManfaat');
-                if (targetElement) {
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Penghasilan Dasar Pensiun (PhDP)</label>
+                    <input type="text" id="phdp" placeholder="Contoh: 10000000">
+                    <small style="color: #666; font-size: 0.85rem; margin-top: 0.5rem; display: block;">
+                        PhDP = Gaji Pokok + Tunjangan Tetap
+                    </small>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <button onclick="resetForm()"
+                    style="background: linear-gradient(135deg, #ef5350 0%, #e53935 100%); color: white; padding: 1.2rem 3rem; border: none; border-radius: 50px; font-weight: 700; cursor: pointer; transition: all 0.3s; box-shadow: 0 8px 25px rgba(239, 83, 80, 0.3); font-size: 1.05rem;">
+                    <i class="fas fa-redo"></i> Reset
+                </button>
+                <button class="calculate-btn" onclick="calculatePension()">
+                    <i class="fas fa-calculator"></i> Hitung Estimasi
+                </button>
+            </div>
+
+            <div class="result-box" id="resultBox" style="display: none;">
+                <div class="result-label">Perkiraan Manfaat Pensiun Bulanan</div>
+                <div class="result-value" id="resultValue">Rp 0</div>
+                <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.3);">
+                    <p style="font-size: 0.9rem; opacity: 0.9; line-height: 1.6;">
+                        <strong>Rumus:</strong> 2,5% × Masa Kerja × PhDP<br>
+                        <span id="formulaDetail" style="font-size: 0.85rem; opacity: 0.8;"></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function scrollToCalculator() {
+            const targetElement = document.getElementById('simulasiManfaat');
+            if (targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            function hitungMasaKerja() {
+                const join = document.getElementById("joinDate").value;
+                const retire = document.getElementById("retirementDate").value;
+                if (!join || !retire) return;
+
+                const joinDate = new Date(join);
+                const retireDate = new Date(retire);
+
+                let years = retireDate.getFullYear() - joinDate.getFullYear();
+                const m = retireDate.getMonth() - joinDate.getMonth();
+
+                if (m < 0 || (m === 0 && retireDate.getDate() < joinDate.getDate())) years--;
+                if (years < 0) years = 0;
+
+                document.getElementById("masaKerjaInput").value = years;
+            }
+
+            document.getElementById("joinDate").addEventListener("change", hitungMasaKerja);
+            document.getElementById("retirementDate").addEventListener("change", hitungMasaKerja);
+
+            window.calculatePension = function() {
+                const masaKerja = parseFloat(document.getElementById("masaKerjaInput").value);
+                const phdpRaw = document.getElementById("phdp").value;
+                const phdp = parseFloat(phdpRaw.replace(/[^0-9]/g, ""));
+
+                if (isNaN(masaKerja) || isNaN(phdp)) {
+                    alert("Mohon isi Masa Kerja dan PhDP dengan benar!");
+                    return;
                 }
-            }
 
-            document.addEventListener("DOMContentLoaded", function() {
-                function hitungMasaKerja() {
-                    const join = document.getElementById("joinDate").value;
-                    const retire = document.getElementById("retirementDate").value;
-                    if (!join || !retire) return;
+                const manfaat = 0.025 * masaKerja * phdp;
 
-                    const joinDate = new Date(join);
-                    const retireDate = new Date(retire);
+                document.getElementById("resultValue").innerText =
+                    "Rp " + manfaat.toLocaleString("id-ID");
 
-                    let years = retireDate.getFullYear() - joinDate.getFullYear();
-                    const m = retireDate.getMonth() - joinDate.getMonth();
+                document.getElementById("formulaDetail").innerText =
+                    `2,5% × ${masaKerja} × ${phdp.toLocaleString("id-ID")}`;
 
-                    if (m < 0 || (m === 0 && retireDate.getDate() < joinDate.getDate())) years--;
-                    if (years < 0) years = 0;
+                document.getElementById("resultBox").style.display = "block";
+            };
 
-                    document.getElementById("masaKerjaInput").value = years;
-                }
-
-                document.getElementById("joinDate").addEventListener("change", hitungMasaKerja);
-                document.getElementById("retirementDate").addEventListener("change", hitungMasaKerja);
-
-                window.calculatePension = function() {
-                    const masaKerja = parseFloat(document.getElementById("masaKerjaInput").value);
-                    const phdpRaw = document.getElementById("phdp").value;
-                    const phdp = parseFloat(phdpRaw.replace(/[^0-9]/g, ""));
-
-                    if (isNaN(masaKerja) || isNaN(phdp)) {
-                        alert("Mohon isi Masa Kerja dan PhDP dengan benar!");
-                        return;
-                    }
-
-                    const manfaat = 0.025 * masaKerja * phdp;
-
-                    document.getElementById("resultValue").innerText =
-                        "Rp " + manfaat.toLocaleString("id-ID");
-
-                    document.getElementById("formulaDetail").innerText =
-                        `2,5% × ${masaKerja} × ${phdp.toLocaleString("id-ID")}`;
-
-                    document.getElementById("resultBox").style.display = "block";
-                };
-
-                window.resetForm = function() {
-                    document.getElementById("masaKerjaInput").value = "";
-                    document.getElementById("joinDate").value = "";
-                    document.getElementById("retirementDate").value = "";
-                    document.getElementById("phdp").value = "";
-                    document.getElementById("resultBox").style.display = "none";
-                };
-            });
-        </script>
+            window.resetForm = function() {
+                document.getElementById("masaKerjaInput").value = "";
+                document.getElementById("joinDate").value = "";
+                document.getElementById("retirementDate").value = "";
+                document.getElementById("phdp").value = "";
+                document.getElementById("resultBox").style.display = "none";
+            };
+        });
+    </script>
 
     </div>
     </div>
@@ -536,27 +561,64 @@
 
             <a href="{{ route('berita.show', $item->id) }}" class="news-card tab-{{ strtolower($item->kategori) }}">
 
-                <div class="news-image1">
+                <<<<<<< HEAD <div class="news-image1">
                     <img src="{{ $fotoName ? asset('uploads/berita/' . rawurlencode($fotoName)) : asset('image/default.jpg') }}"
                         alt="Foto Berita">
 
                     <div class="news-date-badge">
                         {{ \Carbon\Carbon::parse($item->tanggal)->format('d M Y') }}
-                    </div>
-                </div>
+                        =======
+                        <div class="news-grid">
+                            @forelse ($berita as $item)
+                                <div class="news-card tab-{{ strtolower($item->kategori) }}" style="cursor:pointer;"
+                                    onclick="window.location.href='{{ route('berita.detail', $item->id) }}'">
+                                    <div class="news-image1">
+                                        @php
+                                            $fotoName = $item->foto
+                                                ? basename(str_replace('\\', '/', $item->foto))
+                                                : null;
+                                        @endphp
 
-                <div class="news-content">
-                    <div class="news-category">{{ strtoupper($item->kategori) }}</div>
-                    <h3 class="news-title">{{ $item->judul }}</h3>
+                                        @if ($fotoName)
+                                            <img src="{{ asset('uploads/berita/' . rawurlencode($fotoName)) }}"
+                                                alt="Foto Berita">
+                                        @else
+                                            <img src="{{ asset('image/default.jpg') }}" alt="Foto Default">
+                                        @endif
 
-                    <p class="news-excerpt">
-                        {{ \Illuminate\Support\Str::limit($item->deskripsi, 150) }}
-                    </p>
+                                        <div class="news-date-badge">
+                                            {{ \Carbon\Carbon::parse($item->tanggal)->format('d M Y') }}
+                                        </div>
+                                    </div>
 
-                    <span class="read-more">
-                        Baca Selengkapnya <i class="fas fa-arrow-right"></i>
-                    </span>
-                </div>
+                                    <div class="news-content">
+                                        <div class="news-category">{{ strtoupper($item->kategori) }}</div>
+                                        <h3 class="news-title">{{ $item->judul }}</h3>
+                                        <p class="news-excerpt">
+                                            {{ \Illuminate\Support\Str::limit($item->deskripsi, 150) }}
+                                        </p>
+
+                                        {{-- ✅ LINK DETAIL --}}
+                                        <a href="{{ route('berita.detail', $item->id) }}" class="read-more"
+                                            onclick="event.stopPropagation();">
+                                            Baca Selengkapnya <i class="fas fa-arrow-right"></i>
+                                        </a>
+                                        >>>>>>> 2d425991d87126f9cbf1a86484e95089fce05827
+                                    </div>
+                                </div>
+
+                                <div class="news-content">
+                                    <div class="news-category">{{ strtoupper($item->kategori) }}</div>
+                                    <h3 class="news-title">{{ $item->judul }}</h3>
+
+                                    <p class="news-excerpt">
+                                        {{ \Illuminate\Support\Str::limit($item->deskripsi, 150) }}
+                                    </p>
+
+                                    <span class="read-more">
+                                        Baca Selengkapnya <i class="fas fa-arrow-right"></i>
+                                    </span>
+                                </div>
 
             </a>
         @empty
