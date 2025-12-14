@@ -228,7 +228,9 @@
 
                 <div class="news-grid">
                     @forelse ($berita as $item)
-                    <div class="news-card tab-{{ strtolower($item->kategori) }}">
+                    <div class="news-card tab-{{ strtolower($item->kategori) }}"
+                        style="cursor:pointer;"
+                        onclick="window.location.href='{{ route('berita.detail', $item->id) }}'">
                         <div class="news-image1">
                             @php
                             $fotoName = $item->foto
@@ -253,7 +255,11 @@
                             <p class="news-excerpt">
                                 {{ \Illuminate\Support\Str::limit($item->deskripsi, 150) }}
                             </p>
-                            <a href="#" class="read-more">
+
+                            {{-- ✅ LINK DETAIL --}}
+                            <a href="{{ route('berita.detail', $item->id) }}"
+                                class="read-more"
+                                onclick="event.stopPropagation();">
                                 Baca Selengkapnya <i class="fas fa-arrow-right"></i>
                             </a>
                         </div>
@@ -458,7 +464,9 @@
 
             <div class="news-grid">
                 @forelse ($berita as $item)
-                <div class="news-card tab-{{ strtolower($item->kategori) }}">
+                <div class="news-card tab-{{ strtolower($item->kategori) }}"
+                    style="cursor:pointer;"
+                    onclick="window.location.href='{{ route('berita.detail', $item->id) }}'">
                     <div class="news-image1">
                         @php
                         $fotoName = $item->foto
@@ -483,7 +491,11 @@
                         <p class="news-excerpt">
                             {{ \Illuminate\Support\Str::limit($item->deskripsi, 150) }}
                         </p>
-                        <a href="#" class="read-more">
+
+                        {{-- ✅ LINK DETAIL --}}
+                        <a href="{{ route('berita.detail', $item->id) }}"
+                            class="read-more"
+                            onclick="event.stopPropagation();">
                             Baca Selengkapnya <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>

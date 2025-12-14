@@ -26,3 +26,5 @@ Route::resource('berita', BeritaInformasiController::class);
 Route::prefix('admin')->group(function () {
     Route::resource('berita', BeritaInformasiController::class);
 });
+Route::get('/berita-detail/{id}', [BeritaInformasiController::class, 'detail'])
+    ->name('berita.detail');

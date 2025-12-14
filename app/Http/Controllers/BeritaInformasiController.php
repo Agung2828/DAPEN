@@ -27,6 +27,12 @@ class BeritaInformasiController extends Controller
         return view('Dashboard', compact('berita'));
     }
 
+    public function detail($id)
+    {
+        $berita = BeritaInformasi::findOrFail($id);
+        return view('admin.berita.detail', compact('berita'));
+    }
+
     /**
      * STORE (CREATE)
      */
