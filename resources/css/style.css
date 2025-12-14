@@ -1578,5 +1578,86 @@
     .mobile-menu-btn, .mobile-nav {
         display: none; /* Sembunyikan tombol dan sidebar mobile */
     }
+    .news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.news-card {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.news-image1 {
+    position: relative;
+    width: 100%;
+    /* Gunakan padding-top untuk rasio gambar */
+    padding-top: 56.25%; /* 16:9 ratio */
+    overflow: hidden;
+}
+
+.news-image1 img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* agar menutupi kotak tanpa distorsi */
+    display: block;
+}
+
+.news-date-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(255,0,0,0.9);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.news-content {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.news-category {
+    color: #c00;
+    font-weight: bold;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+}
+
+.news-title {
+    margin: 0.5rem 0;
+    font-size: 1.1rem;
+    line-height: 1.3;
+}
+
+.news-excerpt {
+    flex-grow: 1;
+    margin-bottom: 0.5rem;
+}
+
+.read-more {
+    color: #c00;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+}
+
+.read-more i {
+    margin-left: 5px;
+}
+
     
 }

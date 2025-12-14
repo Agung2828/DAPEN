@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\BeritaInformasi;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
@@ -11,64 +11,93 @@ class BeritaInformasiController extends Controller
 {
     /**
      * LIST / INDEX ADMIN
+     * route: GET /admin/berita
      */
     public function index()
     {
-        $berita = BeritaInformasi::latest()->get();
+        $berita = BeritaInformasi::orderByDesc('tanggal')->get();
         return view('admin.berita.index', compact('berita'));
     }
 
     /**
+     * FORM CREATE ADMIN
+     * route: GET /admin/berita/create
+     */
+    public function create()
+    {
+        return view('admin.berita.create');
+    }
+
+    /**
      * DASHBOARD USER
+     * route: GET /  atau /dashboard
      */
     public function dashboard()
     {
-        $berita = BeritaInformasi::orderBy('tanggal', 'desc')->get();
+        $berita = BeritaInformasi::orderByDesc('tanggal')->get();
         return view('Dashboard', compact('berita'));
     }
 
     /**
-     * STORE (CREATE)
+     * STORE (CREATE) - MULTI INPUT
+     * route: POST /admin/berita
      */
     public function store(Request $request)
     {
         $request->validate([
-            'kategori'  => 'required|string',
-            'tanggal'   => 'required|date',
-            'foto'      => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-            'judul'     => 'required|string|max:255',
-            'deskripsi' => 'required',
+            'kategori'    => 'required|array',
+            'kategori.*'  => 'required|string',
+            'tanggal'     => 'required|array',
+            'tanggal.*'   => 'required|date',
+            'foto'        => 'nullable|array',
+            'foto.*'      => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'judul'       => 'required|array',
+            'judul.*'     => 'required|string|max:255',
+            'deskripsi'   => 'required|array',
+            'deskripsi.*' => 'required',
         ]);
 
-        $namaFoto = null;
+        foreach ($request->kategori as $index => $kategori) {
+            $namaFoto = null;
 
-        if ($request->hasFile('foto')) {
-            $file = $request->file('foto');
+            if ($request->hasFile("foto.$index")) {
+                $file = $request->file("foto.$index");
 
-            // rapikan nama asli (hapus spasi)
-            $original     = $file->getClientOriginalName();
-            $safeOriginal = preg_replace('/\s+/', '_', $original);
+                $original     = $file->getClientOriginalName();
+                $safeOriginal = preg_replace('/\s+/', '_', $original);
 
-            // nama file super unik (anti ketimpa)
-            $namaFoto = Str::uuid() . '_' . $safeOriginal;
+                $namaFoto = (string) Str::uuid() . '_' . $safeOriginal;
 
-            $file->move(public_path('uploads/berita'), $namaFoto);
+                $file->move(public_path('uploads/berita'), $namaFoto);
+            }
+
+            BeritaInformasi::create([
+                'kategori'  => $kategori,
+                'tanggal'   => $request->tanggal[$index],
+                'foto'      => $namaFoto,
+                'judul'     => $request->judul[$index],
+                'deskripsi' => $request->deskripsi[$index],
+            ]);
         }
 
-        BeritaInformasi::create([
-            'kategori'  => $request->kategori,
-            'tanggal'   => $request->tanggal,
-            'foto'      => $namaFoto,  // simpan nama file saja
-            'judul'     => $request->judul,
-            'deskripsi' => $request->deskripsi,
-        ]);
-
-        return redirect()->route('berita.index')
+        // ✅ admin resource berada di /admin/berita
+        return redirect()->route('admin.berita.index')
             ->with('success', 'Berita berhasil ditambahkan!');
     }
 
     /**
+     * FORM EDIT ADMIN
+     * route: GET /admin/berita/{berita}/edit
+     */
+    public function edit($id)
+    {
+        $berita = BeritaInformasi::findOrFail($id);
+        return view('admin.berita.edit', compact('berita'));
+    }
+
+    /**
      * UPDATE (EDIT)
+     * route: PUT/PATCH /admin/berita/{berita}
      */
     public function update(Request $request, $id)
     {
@@ -82,10 +111,11 @@ class BeritaInformasiController extends Controller
 
         $berita = BeritaInformasi::findOrFail($id);
 
+        // upload foto baru jika ada
         if ($request->hasFile('foto')) {
 
-            // hapus foto lama (aman walau DB nyimpen path)
-            if ($berita->foto) {
+            // hapus foto lama
+            if (!empty($berita->foto)) {
                 $oldFotoName = basename(str_replace('\\', '/', $berita->foto));
                 $oldPath = public_path('uploads/berita/' . $oldFotoName);
 
@@ -94,15 +124,12 @@ class BeritaInformasiController extends Controller
                 }
             }
 
-            // upload foto baru
             $file = $request->file('foto');
 
             $original     = $file->getClientOriginalName();
             $safeOriginal = preg_replace('/\s+/', '_', $original);
 
-            // nama file super unik (anti ketimpa)
-            $namaFoto = Str::uuid() . '_' . $safeOriginal;
-
+            $namaFoto = (string) Str::uuid() . '_' . $safeOriginal;
             $file->move(public_path('uploads/berita'), $namaFoto);
 
             $berita->foto = $namaFoto;
@@ -113,21 +140,33 @@ class BeritaInformasiController extends Controller
             'tanggal'   => $request->tanggal,
             'judul'     => $request->judul,
             'deskripsi' => $request->deskripsi,
-            'foto'      => $berita->foto,
+            'foto'      => $berita->foto, // bisa null atau nama foto baru
         ]);
 
-        return redirect()->route('berita.index')
+        return redirect()->route('admin.berita.index')
             ->with('success', 'Berita berhasil diperbarui!');
     }
 
     /**
+     * SHOW (DETAIL BERITA - PUBLIC)
+     * route: GET /berita/{id}
+     */
+    public function show($id)
+    {
+        $berita = BeritaInformasi::findOrFail($id);
+        return view('show', compact('berita'));
+    }
+
+    /**
      * DELETE
+     * route: DELETE /admin/berita/{berita}
      */
     public function destroy($id)
     {
         $berita = BeritaInformasi::findOrFail($id);
 
-        if ($berita->foto) {
+        // hapus foto jika ada
+        if (!empty($berita->foto)) {
             $fotoName = basename(str_replace('\\', '/', $berita->foto));
             $path = public_path('uploads/berita/' . $fotoName);
 
@@ -138,7 +177,7 @@ class BeritaInformasiController extends Controller
 
         $berita->delete();
 
-        return redirect()->route('berita.index')
+        return redirect()->route('admin.berita.index')
             ->with('success', 'Berita berhasil dihapus!');
     }
 }

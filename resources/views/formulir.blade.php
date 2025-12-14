@@ -547,30 +547,28 @@
 
             <!-- Main Nav -->
             <nav class="main-nav">
-                <a href="{{ url('/dashboard') }}" class="nav-link active">Beranda</a>
+                <a href="{{ url('/dashboard') }}" class="nav-link">Beranda</a>
                 <a href="{{ url('/profile') }}" class="nav-link">Profil</a>
-                <a href="{{ url('/kepesertaan') }}" class="nav-link">kepesertaan</a>
+                <a href="{{ url('/kepesertaan') }}" class="nav-link">Kepesertaan</a>
+                <a href="{{ url('/Peraturan') }}" class="nav-link">Peraturan</a>
+                <a href="{{ url('/Warta') }}" class="nav-link">Warta</a>
             </nav>
 
             <!-- Mobile Nav -->
             <div class="mobile-nav" id="mobileNav">
-                <a href="index.html" class="mobile-link active">Beranda</a>
-                <a href="Profil.html" class="mobile-link">Profil</a>
-                <a href="Kepesertaan.html" class="mobile-link">Kepesertaan</a>
-                <a href="Peraturan.html" class="mobile-link">Peraturan</a>
-                <a href="Laporan.html" class="mobile-link">Laporan</a>
-                <a href="Berita.html" class="mobile-link">Berita</a>
+                <a href="{{ url('/dashboard') }}" class="mobile-link">Beranda</a>
+                <a href="{{ url('/profile') }}" class="mobile-link">Profil</a>
+                <a href="{{ url('/kepesertaan') }}" class="mobile-link">Kepesertaan</a>
+                <a href="{{ url('/Peraturan') }}" class="mobile-link">Peraturan</a>
+                <a href="{{ url('/Warta') }}" class="mobile-link">Warta</a>
             </div>
 
+
             <!-- Header Actions -->
-            <div class="header-actions">
-                <button class="search-btn">
-                    <i class="fas fa-search"></i>
-                </button>
-                <button class="mobile-menu-btn">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </div>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
 
         </div>
     </header>
@@ -743,46 +741,28 @@
                     </div>
 
                     <!-- Laporan Keuangan Card -->
+
+                    <!-- Laporan Keuangan Card -->
                     <div class="form-card">
                         <div class="card-header">
-                            <div class="card-icon">
-                                <i class="fas fa-chart-line"></i>
-                            </div>
+                            <div class="card-icon"><i class="fas fa-chart-line"></i></div>
                             <h2>Laporan Keuangan</h2>
                             <p class="card-description">Laporan Keuangan Tahunan Dana Pensiun Bank Riau Kepri
                                 Syariah</p>
                         </div>
                         <div class="form-list">
-                            <a href="pdf/DPBRK-LKA-12-2024-00.pdf" class="form-item"
-                                data-name="Laporan Keuangan 2024" download>
-                                <i class="fas fa-file-download"></i>
-                                <span class="form-name">Laporan Keuangan 2024 (Audited)</span>
-                                <span class="file-badge">PDF</span>
-                            </a>
-                            <a href="pdf/DPBRK-LKA-12-2023-00.pdf" class="form-item"
-                                data-name="Laporan Keuangan 2023" download>
-                                <i class="fas fa-file-download"></i>
-                                <span class="form-name">Laporan Keuangan 2023 (Audited)</span>
-                                <span class="file-badge">PDF</span>
-                            </a>
-                            <a href="pdf/DPBRK-LKA-12-2022-00.pdf" class="form-item"
-                                data-name="Laporan Keuangan 2022" download>
-                                <i class="fas fa-file-download"></i>
-                                <span class="form-name">Laporan Keuangan 2022 (Audited)</span>
-                                <span class="file-badge">PDF</span>
-                            </a>
-                            <a href="pdf/DPBRK-LKA-12-2021-00.pdf" class="form-item"
-                                data-name="Laporan Keuangan 2021" download>
-                                <i class="fas fa-file-download"></i>
-                                <span class="form-name">Laporan Keuangan 2021 (Audited)</span>
-                                <span class="file-badge">PDF</span>
-                            </a>
-                            <a href="pdf/DPBRK-LKA-12-2020-00.pdf" class="form-item"
-                                data-name="Laporan Keuangan 2020" download>
-                                <i class="fas fa-file-download"></i>
-                                <span class="form-name">Laporan Keuangan 2020 (Audited)</span>
-                                <span class="file-badge">PDF</span>
-                            </a>
+                            @forelse($laporans as $laporan)
+                                <a href="{{ asset('uploads/laporan/' . $laporan->file) }}" class="form-item"
+                                    data-name="Laporan Keuangan {{ $laporan->tahun }}" download>
+                                    <i class="fas fa-file-download"></i>
+                                    <span class="form-name">Laporan Keuangan {{ $laporan->tahun }}
+                                        (Audited)
+                                    </span>
+                                    <span class="file-badge">PDF</span>
+                                </a>
+                            @empty
+                                <p class="text-muted">Belum ada laporan keuangan.</p>
+                            @endforelse
                         </div>
                     </div>
 

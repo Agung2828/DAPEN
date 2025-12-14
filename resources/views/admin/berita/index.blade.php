@@ -34,7 +34,6 @@
                         @foreach ($berita as $item)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-
                                 <td>
                                     @if ($item->foto)
                                         <img src="{{ asset('uploads/berita/' . $item->foto) }}" width="80"
@@ -43,11 +42,9 @@
                                         <span class="text-muted">Tidak ada</span>
                                     @endif
                                 </td>
-
                                 <td>{{ $item->kategori }}</td>
                                 <td>{{ $item->judul }}</td>
                                 <td>{{ date('d-m-Y', strtotime($item->tanggal)) }}</td>
-
                                 <td>
                                     <button class="btn btn-sm btn-warning editBtn" data-item='@json($item)'
                                         data-update-url="{{ route('berita.update', $item->id) }}" data-bs-toggle="modal"
@@ -70,7 +67,6 @@
         </div>
     </div>
 
-
     {{-- ======================= --}}
     {{--  MODAL CREATE           --}}
     {{-- ======================= --}}
@@ -87,42 +83,50 @@
                     @csrf
 
                     <div class="modal-body">
+                        <div id="formContainer">
+                            <div class="formBerita mb-3 border p-3 rounded position-relative">
+                                <button type="button" class="btn-close position-absolute top-0 end-0 removeFormBtn"
+                                    style="display:none;"></button>
 
-                        <div class="mb-3">
-                            <label>Kategori</label>
-                            <select name="kategori" class="form-control" required>
-                                <option value="">-- Pilih Kategori --</option>
-                                <option value="Pengumuman">Pengumuman</option>
-                                <option value="Kegiatan">Kegiatan</option>
-                                <option value="Penghargaan">Penghargaan</option>
-                            </select>
+                                <div class="mb-2">
+                                    <label>Kategori</label>
+                                    <select name="kategori[]" class="form-control" required>
+                                        <option value="">-- Pilih Kategori --</option>
+                                        <option value="Pengumuman">Pengumuman</option>
+                                        <option value="Kegiatan">Kegiatan</option>
+                                        <option value="Penghargaan">Penghargaan</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-2">
+                                    <label>Tanggal</label>
+                                    <input type="date" name="tanggal[]" class="form-control" required>
+                                </div>
+
+                                <div class="mb-2">
+                                    <label>Foto (Opsional)</label>
+                                    <input type="file" name="foto[]" class="form-control">
+                                </div>
+
+                                <div class="mb-2">
+                                    <label>Judul</label>
+                                    <input type="text" name="judul[]" class="form-control" required>
+                                </div>
+
+                                <div class="mb-2">
+                                    <label>Deskripsi</label>
+                                    <textarea name="deskripsi[]" class="form-control" rows="3" required></textarea>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="mb-3">
-                            <label>Tanggal</label>
-                            <input type="date" name="tanggal" class="form-control" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label>Foto (Opsional)</label>
-                            <input type="file" name="foto" class="form-control">
-                        </div>
-
-                        <div class="mb-3">
-                            <label>Judul</label>
-                            <input type="text" name="judul" class="form-control" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label>Deskripsi</label>
-                            <textarea name="deskripsi" class="form-control" rows="4" required></textarea>
-                        </div>
-
+                        <button type="button" class="btn btn-sm btn-secondary mb-2" id="addFormBtn">+ Tambah Form
+                            Berita</button>
                     </div>
 
                     <div class="modal-footer">
                         <button class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <button class="btn btn-primary">Simpan</button>
+                        <button class="btn btn-primary">Simpan Semua</button>
                     </div>
 
                 </form>
@@ -130,7 +134,6 @@
             </div>
         </div>
     </div>
-
 
     {{-- ======================= --}}
     {{--  MODAL EDIT             --}}
@@ -200,31 +203,49 @@
         </div>
     </div>
 
-
     {{-- ======================= --}}
-    {{--  SCRIPT EDIT MODAL      --}}
+    {{--  SCRIPT ADD/REMOVE FORM --}}
     {{-- ======================= --}}
     <script>
-        document.querySelectorAll('.editBtn').forEach(btn => {
-            btn.addEventListener('click', function() {
+        document.addEventListener('DOMContentLoaded', function() {
 
-                let item = JSON.parse(this.getAttribute('data-item'));
+            const addFormBtn = document.getElementById('addFormBtn');
+            const formContainer = document.getElementById('formContainer');
 
-                document.getElementById('edit_kategori').value = item.kategori;
-                document.getElementById('edit_tanggal').value = item.tanggal;
-                document.getElementById('edit_judul').value = item.judul;
-                document.getElementById('edit_deskripsi').value = item.deskripsi;
+            addFormBtn.addEventListener('click', function() {
+                const formBerita = document.querySelector('.formBerita').cloneNode(true);
+                formBerita.querySelectorAll('input, textarea, select').forEach(input => input.value = '');
+                formBerita.querySelector('.removeFormBtn').style.display = 'block';
+                formContainer.appendChild(formBerita);
+            });
 
-                let img = document.getElementById('edit_foto_preview');
-                if (item.foto) {
-                    img.src = "/uploads/berita/" + item.foto;
-                    img.classList.remove('d-none');
-                } else {
-                    img.classList.add('d-none');
+            formContainer.addEventListener('click', function(e) {
+                if (e.target && e.target.classList.contains('removeFormBtn')) {
+                    e.target.closest('.formBerita').remove();
                 }
+            });
 
-                let updateUrl = this.getAttribute('data-update-url');
-                document.getElementById('editForm').action = updateUrl;
+            // Script Edit Modal
+            document.querySelectorAll('.editBtn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    let item = JSON.parse(this.getAttribute('data-item'));
+
+                    document.getElementById('edit_kategori').value = item.kategori;
+                    document.getElementById('edit_tanggal').value = item.tanggal;
+                    document.getElementById('edit_judul').value = item.judul;
+                    document.getElementById('edit_deskripsi').value = item.deskripsi;
+
+                    let img = document.getElementById('edit_foto_preview');
+                    if (item.foto) {
+                        img.src = "/uploads/berita/" + item.foto;
+                        img.classList.remove('d-none');
+                    } else {
+                        img.classList.add('d-none');
+                    }
+
+                    let updateUrl = this.getAttribute('data-update-url');
+                    document.getElementById('editForm').action = updateUrl;
+                });
             });
         });
     </script>

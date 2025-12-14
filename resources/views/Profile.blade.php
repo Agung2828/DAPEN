@@ -469,19 +469,22 @@
                     <img src="{{ asset('image/logo.png') }}" alt="Logo">
                 </a>
             </div>
+            <!-- Main Nav -->
             <nav class="main-nav">
                 <a href="{{ url('/dashboard') }}" class="nav-link">Beranda</a>
                 <a href="{{ url('/profile') }}" class="nav-link active">Profil</a>
-                <a href="{{ url('/kepesertaan') }}" class="nav-link">kepesertaan</a>
+                <a href="{{ url('/kepesertaan') }}" class="nav-link">Kepesertaan</a>
+                <a href="{{ url('/Peraturan') }}" class="nav-link">Peraturan</a>
+                <a href="{{ url('/Warta') }}" class="nav-link">Warta</a>
             </nav>
-            <div></div>
+
+            <!-- Mobile Nav -->
             <div class="mobile-nav" id="mobileNav">
-                <a href="index.html" class="mobile-link">Beranda</a>
-                <a href="Profil.html" class="mobile-link active">Profil</a>
-                <a href="#" class="mobile-link">Kepesertaan</a>
-                <a href="#" class="mobile-link">Peraturan</a>
-                <a href="#" class="mobile-link">Laporan</a>
-                <a href="#" class="mobile-link">Berita</a>
+                <a href="{{ url('/dashboard') }}" class="mobile-link">Beranda</a>
+                <a href="{{ url('/profile') }}" class="mobile-link active">Profil</a>
+                <a href="{{ url('/kepesertaan') }}" class="mobile-link">Kepesertaan</a>
+                <a href="{{ url('/Peraturan') }}" class="mobile-link">Peraturan</a>
+                <a href="{{ url('/Warta') }}" class="mobile-link">Warta</a>
             </div>
             <script>
                 document.querySelector(".mobile-menu-btn").addEventListener("click", function() {
@@ -489,9 +492,6 @@
                 });
             </script>
             <div class="header-actions">
-                <button class="search-btn">
-                    <i class="fas fa-search"></i>
-                </button>
                 <button class="mobile-menu-btn">
                     <i class="fas fa-bars"></i>
                 </button>

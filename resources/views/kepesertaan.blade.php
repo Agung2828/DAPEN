@@ -524,20 +524,20 @@
             <!-- Main Nav -->
             <nav class="main-nav">
                 <a href="{{ url('/dashboard') }}" class="nav-link">Beranda</a>
-                <a href="{{ url('/profile') }}" class="nav-link">Profil</a>
-                <a href="{{ url('/kepesertaan') }}" class="nav-link active">kepesertaan</a>
+                <a href="{{ url('/profile') }}" class="nav-link ">Profil</a>
+                <a href="{{ url('/kepesertaan') }}" class="nav-link active">Kepesertaan</a>
+                <a href="{{ url('/Peraturan') }}" class="nav-link">Peraturan</a>
+                <a href="{{ url('/Warta') }}" class="nav-link">Warta</a>
             </nav>
 
             <!-- Mobile Nav -->
             <div class="mobile-nav" id="mobileNav">
-                <a href="index.html" class="mobile-link active">Beranda</a>
-                <a href="Profil.html" class="mobile-link">Profil</a>
-                <a href="Kepesertaan.html" class="mobile-link">Kepesertaan</a>
-                <a href="Peraturan.html" class="mobile-link">Peraturan</a>
-                <a href="Laporan.html" class="mobile-link">Laporan</a>
-                <a href="Berita.html" class="mobile-link">Berita</a>
+                <a href="{{ url('/dashboard') }}" class="mobile-link">Beranda</a>
+                <a href="{{ url('/profile') }}" class="mobile-link">Profil</a>
+                <a href="{{ url('/kepesertaan') }}" class="mobile-link active">Kepesertaan</a>
+                <a href="{{ url('/Peraturan') }}" class="mobile-link">Peraturan</a>
+                <a href="{{ url('/Warta') }}" class="mobile-link">Warta</a>
             </div>
-
             <!-- SCROLL EFFECT -->
             <script>
                 window.addEventListener('scroll', function() {
@@ -552,9 +552,6 @@
             </script>
             <!-- Header Actions -->
             <div class="header-actions">
-                <button class="search-btn">
-                    <i class="fas fa-search"></i>
-                </button>
                 <button class="mobile-menu-btn">
                     <i class="fas fa-bars"></i>
                 </button>
@@ -563,428 +560,301 @@
         </div>
     </header>
 
-    <div class="hero-section">
-        <div class="hero-content">
-            <h1>Kepesertaan</h1>
-            <p>Informasi Lengkap Program & Layanan Peserta Dana Pensiun Bank Riau Kepri</p>
-        </div>
-    </div>
+    @extends('layout.user.index') {{-- Pastikan file layout ada! --}}
 
-    <div class="stats-section">
-        <div class="stats-header">
-            <h2>Jumlah Peserta</h2>
-            {{-- <p class="stats-date">Per: 31 Oktober 2025</p> --}}
-        </div>
-        <div class="data-stats-grid">
-            <div class="stat-card active-stat">
-                <div class="stat-number">695</div>
-                <div class="stat-label">Peserta Aktif</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">71</div>
-                <div class="stat-label">Pensiun Ditunda</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">157</div>
-                <div class="stat-label">Pensiun Normal</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">123</div>
-                <div class="stat-label">Pensiun Dipercepat</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">73</div>
-                <div class="stat-label">Pensiun Janda/Duda</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">9</div>
-                <div class="stat-label">Pensiun Anak</div>
-            </div>
-        </div>
-        <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 2px solid #e5e7eb;">
-            <h3 style="color: #1e3c72; font-size: 28px;">Total Peserta: <span style="color: #fbbf24;">1,128</span> Orang
-            </h3>
-        </div>
-    </div>
-
-    <div class="section">
-        <h2 class="section-title">Informasi Kepesertaan</h2>
-        <p class="section-subtitle">Panduan lengkap hak, kewajiban, dan program manfaat pensiun</p>
-
-        <div class="tabs">
-            <button class="tab-btn active" onclick="openTab(event, 'hak-kewajiban')">Hak & Kewajiban</button>
-            <button class="tab-btn" onclick="openTab(event, 'program')">Program Pensiun</button>
-            <button class="tab-btn" onclick="openTab(event, 'iuran')">Iuran Pensiun</button>
-            <button class="tab-btn" onclick="openTab(event, 'syarat')">Syarat Klaim</button>
-            <button class="tab-btn" onclick="openTab(event, 'pengkinian')">Pengaduan & Kontak</button>
-        </div>
-
-        <div id="hak-kewajiban" class="tab-content active">
-            <div class="card-grid">
-                <div class="info-card">
-                    <h3><i class="fas fa-check-circle" style="color: #10b981;"></i> Hak Peserta</h3>
-                    <ul>
-                        <li>Menyampaikan pendapat dan saran mengenai perkembangan portofolio investasi</li>
-                        <li>Menerima **Manfaat Pensiun Normal** setelah mencapai usia pensiun</li>
-                        <li>Memperoleh **Manfaat Pensiun Dipercepat** sesuai ketentuan</li>
-                        <li>Mendapatkan **Manfaat Pensiun Cacat** bila mengalami cacat</li>
-                        <li>Hak atas **Pensiun Ditunda** dengan masa kepesertaan minimal 3 tahun</li>
-                        <li>Pengembalian **iuran peserta + bunga** untuk masa kepesertaan < 3 tahun</li>
-                    </ul>
-                </div>
-
-                <div class="info-card">
-                    <h3><i class="fas fa-exclamation-circle" style="color: #ef4444;"></i> Kewajiban Peserta</h3>
-                    <ul>
-                        <li>Membayar **Iuran Peserta** tepat waktu setiap bulan</li>
-                        <li>Memberikan data kepesertaan yang lengkap dan akurat</li>
-                        <li>Mendaftarkan Istri/Suami dan Anak yang sah</li>
-                        <li>Melaporkan setiap **perubahan susunan keluarga**</li>
-                        <li>Mentaati Peraturan Dana Pensiun yang berlaku</li>
-                        <li>Bertanggung jawab atas **kebenaran data** yang diberikan</li>
-                    </ul>
-                </div>
+    @section('content')
+        <div class="hero-section">
+            <div class="hero-content">
+                <h1>Kepesertaan Dana Pensiun</h1>
+                <p>Informasi lengkap mengenai peserta, iuran, hak, kewajiban, dan layanan Dana Pensiun Bank Riau Kepri</p>
             </div>
         </div>
 
-        <div id="program" class="tab-content">
-            <div class="info-box">
-                <h3>Jenis Program</h3>
-                <p>Jenis Dana Pensiun adalah **Dana Pensiun Pemberi Kerja (DPPK)** dengan Program: **Program Pensiun
-                    Manfaat Pasti (PPMP)**</p>
-            </div>
-
-            <h3 style="color: #1e3c72; margin: 30px 0 20px;">Jenis Manfaat Pensiun</h3>
-
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>Jenis Manfaat</th>
-                        <th>Deskripsi</th>
-                        <th>Usia Minimum</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>**Pensiun Normal** (MPN)</td>
-                        <td>Manfaat bagi peserta yang pensiun pada usia normal</td>
-                        <td>56 tahun</td>
-                    </tr>
-                    <tr>
-                        <td>**Pensiun Dipercepat** (MPD)</td>
-                        <td>Manfaat bagi peserta yang pensiun sebelum usia normal</td>
-                        <td>46 tahun</td>
-                    </tr>
-                    <tr>
-                        <td>**Pensiun Ditunda** (PD)</td>
-                        <td>Hak yang ditunda pembayarannya hingga usia pensiun dipercepat</td>
-                        <td>Min. 46 tahun</td>
-                    </tr>
-                    <tr>
-                        <td>**Pensiun Cacat** (MPC)</td>
-                        <td>Manfaat bagi peserta yang mengalami cacat total dan tetap</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>**Pensiun Janda/Duda**</td>
-                        <td>Manfaat setelah peserta/pensiunan meninggal dunia</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>**Pensiun Anak**</td>
-                        <td>Manfaat setelah janda/duda kawin lagi atau meninggal</td>
-                        <td>-</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h3 style="color: #1e3c72; margin: 30px 0 20px;">Rumus Perhitungan Manfaat Pensiun</h3>
-
-            <div class="formula-box">
-                <h4>Rumus Utama (MPN, MPD, MPC) Sebulan</h4>
-                <div class="formula">
-                    $$MP = \text{(Faktor Penghargaan)} \times \text{Masa Kerja} \times \text{PhDP}$$
-                </div>
-                <p style="margin-top: 10px; font-size: 14px; opacity: 0.9;">
-                    *Catatan: Faktor Penghargaan tidak disebutkan namun diwakili 2,5% pada rumus selanjutnya.
-                    PhDP = Penghasilan Dasar Pensiun.*
-                </p>
-            </div>
-
-            <div class="formula-box" style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);">
-                <h4>Hak Pensiun Ditunda (PD)</h4>
-                <div class="formula">
-                    $$PD = \text{Nilai Sekarang} \times (\text{Faktor Penghargaan} \times \text{Masa Kerja} \times
-                    \text{PhDP})$$
-                </div>
-            </div>
-        </div>
-
-        <div id="iuran" class="tab-content">
-            <h3 style="color: #1e3c72; margin-bottom: 20px;">Struktur Iuran Pensiun</h3>
-
-            <div class="card-grid">
-                <div class="info-card">
-                    <h3>Iuran Normal Peserta</h3>
-                    <p style="margin: 15px 0;"><strong style="font-size: 32px; color: #fbbf24;">5%</strong> dari
-                        **PhDP** per bulan</p>
-                    <ul>
-                        <li>Dipungut langsung oleh Pemberi Kerja setiap bulan</li>
-                        <li>Berlaku sejak menjadi peserta hingga PHK/meninggal</li>
-                    </ul>
+        <div class="container mt-4">
+            <!-- Jumlah Peserta -->
+            <div class="stats-section">
+                <div class="stats-header">
+                    <h2>Jumlah Peserta</h2>
                 </div>
 
-                <div class="info-card">
-                    <h3>Iuran Normal Pemberi Kerja</h3>
-                    <p style="margin: 15px 0;">Selisih antara total iuran yang diperlukan dengan iuran peserta</p>
-                    <ul>
-                        <li>Dihitung berdasarkan Laporan Aktuaris terakhir</li>
-                        <li>Wajib disetorkan setiap bulan, selambatnya **tanggal 15** bulan berikutnya</li>
-                    </ul>
-                </div>
-            </div>
+                <div class="data-stats-grid">
+                    @php
+                        $fields = [
+                            'peserta_aktif' => 'Peserta Aktif',
+                            'pensiun_ditunda' => 'Pensiun Ditunda',
+                            'pensiun_normal' => 'Pensiun Normal',
+                            'pensiun_dipercepat' => 'Pensiun Dipercepat',
+                            'pensiun_janda_duda' => 'Pensiun Janda/Duda',
+                            'pensiun_anak' => 'Pensiun Anak',
+                        ];
+                    @endphp
 
-            <div class="info-box" style="margin-top: 30px;">
-                <h3>Iuran Tambahan (Past Service Liabilities - PSL)</h3>
-                <p>Iuran yang disetor dalam rangka melunasi **Defisit**. Besarnya ditetapkan berdasarkan hasil **Valuasi
-                    Aktuaria** terakhir.</p>
-            </div>
-
-            <div class="info-box" style="background: #fef3c7; border-left-color: #f59e0b;">
-                <h3>Penghasilan Dasar Pensiun (PhDP)</h3>
-                <p>PhDP adalah penghasilan yang digunakan sebagai dasar perhitungan besarnya iuran pensiun dan manfaat
-                    pensiun.</p>
-            </div>
-        </div>
-
-        <div id="syarat" class="tab-content">
-            <h3 style="color: #1e3c72; margin-bottom: 20px;">Dokumen Syarat Pembayaran Manfaat Pensiun</h3>
-            <p style="color: #666; margin-bottom: 25px;">Untuk Pensiun Normal, Dipercepat, dan Cacat</p>
-
-            <ul class="custom-list">
-                <li>Asli **Kartu Peserta** Dana Pensiun</li>
-                <li>Fotokopi **Surat Keputusan Pemutusan Hubungan Kerja (SK PHK)** dari Pemberi Kerja</li>
-                <li>Fotokopi **Surat Nikah/Akte Nikah**</li>
-                <li>Fotokopi **Kartu Tanda Penduduk (KTP)** yang masih berlaku</li>
-                <li>**Pas Foto Berwarna** Peserta</li>
-                <li>Fotokopi **Kartu Keluarga (KK)**</li>
-                <li>Fotokopi **Nomor Pokok Wajib Pajak (NPWP)**</li>
-                <li>Fotokopi **Buku Rekening Bank/Tabungan** (untuk transfer manfaat pensiun)</li>
-                <li>**Daftar Susunan Keluarga** sesuai yang terdaftar pada Dana Pensiun</li>
-                <li>Nomor Telepon yang dapat dihubungi</li>
-                <li>Dokumen lain yang ditentukan Dana Pensiun</li>
-            </ul>
-
-            <div style="text-align: center; margin: 30px 0;">
-                <a href="#" class="btn">
-                    <i class="fas fa-download"></i> Download Formulir Permohonan Pembayaran Manfaat Pensiun
-                </a>
-            </div>
-
-            <h3 style="color: #1e3c72; margin: 40px 0 20px;">Ringkasan Tahapan Klaim Manfaat Pensiun</h3>
-
-            <div class="process-steps" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
-                <div class="process-step">
-                    <div class="step-number">1</div>
-                    <div class="step-content">
-                        <h4>Pengajuan Dokumen</h4>
-                        <p>Lengkapi dan kirimkan semua dokumen persyaratan</p>
-                    </div>
-                </div>
-                <div class="process-step">
-                    <div class="step-number">2</div>
-                    <div class="step-content">
-                        <h4>Verifikasi</h4>
-                        <p>Pengecekan kelengkapan dan keabsahan data</p>
-                    </div>
-                </div>
-                <div class="process-step">
-                    <div class="step-number">3</div>
-                    <div class="step-content">
-                        <h4>Pembayaran</h4>
-                        <p>Manfaat Pensiun ditransfer ke rekening peserta</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="pengkinian" class="tab-content">
-            <h3 class="section-title" style="margin-bottom: 20px; border-bottom: 3px solid #1e3c72;"><i
-                    class="fas fa-headset"></i> Layanan Pengaduan Peserta</h3>
-            <p class="section-subtitle" style="margin-bottom: 20px;">Anda dapat melakukan pengaduan apabila terjadi
-                kerugian finansial yang diduga karena kesalahan Dana Pensiun.</p>
-
-            <div class="card-grid">
-                <div class="info-card" style="border: 2px solid #10b981;">
-                    <h3><i class="fas fa-phone-volume" style="color: #10b981;"></i> Pengaduan Lisan</h3>
-                    <p style="margin: 15px 0;">Lakukan pengaduan lisan melalui telepon. Harus dilengkapi identitas dan
-                        deskripsi singkat.</p>
-                    <p><strong>Nomor Telepon: 0761-5781181</strong></p>
-                    <p style="font-size: 0.9em; margin-top: 10px;">*Pengaduan tatap muka dapat diwakilkan dengan surat
-                        kuasa.</p>
+                    @foreach ($fields as $field => $label)
+                        <div class="stat-card {{ $loop->first ? 'active-stat' : '' }}">
+                            <div class="stat-number">{{ $data->$field ?? 0 }}</div>
+                            <div class="stat-label">{{ $label }}</div>
+                        </div>
+                    @endforeach
                 </div>
 
-                <div class="info-card" style="border: 2px solid #ef4444;">
-                    <h3><i class="fas fa-envelope-open-text" style="color: #ef4444;"></i> Pengaduan Tertulis</h3>
-                    <p style="margin: 15px 0;">Pengaduan tertulis harus mengisi Formulir/Blangko dan dilengkapi
-                        fotokopi identitas.</p>
-                    <p>Email: **dapenbankriau@gmail.com**</p>
-                    <p>Fax: **(0761) 32720**</p>
-                    <p>Website: **www.dapenbankbrk.co.id**</p>
-                </div>
-            </div>
-
-            <div class="info-box" style="margin-top: 30px;">
-                <h3><i class="fas fa-hourglass-half"></i> Waktu Penyelesaian Pengaduan</h3>
-                <ul style="list-style-type: disc; padding-left: 20px;">
-                    <li>Dana Pensiun akan menindaklanjuti pengaduan dalam jangka waktu **3 hari kerja** sejak diterima.
-                    </li>
-                    <li>Penanganan diselesaikan dalam jangka waktu paling lama **20 hari kerja** (dapat diperpanjang 20
-                        hari kerja).</li>
-                </ul>
-            </div>
-
-            <h3 class="section-title"
-                style="margin-top: 40px; margin-bottom: 20px; border-bottom: 3px solid #fbbf24;"><i
-                    class="fas fa-comments"></i> Saran & Pendapat</h3>
-            <p>Untuk menyampaikan saran dan pendapat, silakan isi formulir yang tersedia dan kirimkan ke alamat Dana
-                Pensiun.</p>
-
-            <div style="text-align: center; margin: 30px 0;">
-                <a href="#" class="btn">
-                    <i class="fas fa-download"></i> Download Formulir Saran & Pendapat
-                </a>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="section" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
-        <h2 class="section-title">Butuh Bantuan?</h2>
-        <p class="section-subtitle">Tim kami siap membantu Anda</p>
-
-        <div class="card-grid">
-            <div class="info-card">
-                <h3><i class="fas fa-phone-alt" style="color: #10b981;"></i> Hubungi Kami</h3>
-                <p style="margin: 15px 0;">Telepon: **(0761) 5781181**</p>
-                <p>Email: **dapenbankriau@gmail.com**</p>
-            </div>
-
-            <div class="info-card">
-                <h3><i class="fas fa-clock" style="color: #3b82f6;"></i> Jam Operasional</h3>
-                <p style="margin: 15px 0;">Senin - Jumat</p>
-                <p><strong>08:00 - 16:00 WIB</strong></p>
-            </div>
-
-            <div class="info-card">
-                <h3><i class="fas fa-map-marked-alt" style="color: #ef4444;"></i> Kunjungi Kantor</h3>
-                <p style="margin: 15px 0;">Jl. Arifin Ahmad No. 54-56</p>
-                <p>Pekanbaru, Riau 28116</p>
-            </div>
-        </div>
-    </div>
-    <footer>
-        <div class="container">
-            <div class="footer-grid">
-
-                <div class="footer-section">
-                    <h3>Tentang Kami</h3>
-                    <p style="color: #d1d5db; font-size: 0.95rem; line-height: 1.9;">
-                        Dana Pensiun Bank Riau Kepri memberikan jaminan kesejahteraan di masa pensiun
-                        dengan
-                        pengelolaan
-                        yang profesional dan transparan.
-                    </p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
+                <div class="mt-3 pt-2 border-top">
+                    <h3 style="color:#1e3c72;font-size:28px; text-align:center;">
+                        Total Peserta:
+                        <span style="color:#fbbf24;">
+                            {{ ($data->peserta_aktif ?? 0) +
+                                ($data->pensiun_ditunda ?? 0) +
+                                ($data->pensiun_normal ?? 0) +
+                                ($data->pensiun_dipercepat ?? 0) +
+                                ($data->pensiun_janda_duda ?? 0) +
+                                ($data->pensiun_anak ?? 0) }}
+                        </span> Orang
+                    </h3>
                 </div>
 
-                <div class="footer-section">
-                    <h3>Tautan Cepat</h3>
-                    <ul>
-                        <li><a>Beranda</a></li>
-                        <li><a>Profil</a></li>
-                        <li><a>Kepesertaan</a></li>
-                        <li><a>Laporan</a></li>
-                        <li><a>Berita</a></li>
-                    </ul>
+            </div>
+
+            <!-- Informasi Kepesertaan -->
+            <div class="section">
+                <h2 class="section-title">Informasi Kepesertaan</h2>
+                <p class="section-subtitle">Panduan lengkap hak, kewajiban, dan program manfaat pensiun</p>
+
+                <!-- Tabs -->
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="openTab(event, 'hak-kewajiban')">Hak & Kewajiban</button>
+                    <button class="tab-btn" onclick="openTab(event, 'program')">Program Pensiun</button>
+                    <button class="tab-btn" onclick="openTab(event, 'iuran')">Iuran Pensiun</button>
+                    <button class="tab-btn" onclick="openTab(event, 'syarat')">Syarat Klaim</button>
+                    <button class="tab-btn" onclick="openTab(event, 'pengkinian')">Pengaduan & Kontak</button>
                 </div>
 
-                <div class="footer-section">
-                    <h3>Layanan</h3>
-                    <ul>
-                        <li><a>Program Pensiun</a></li>
-                        <li><a>Simulasi Manfaat</a></li>
-                        <li><a>Pengaduan</a></li>
-                        <li><a>FAQ</a></li>
-                        <li><a>Download Formulir</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-section">
-
-                    <h3 style="margin-bottom: 1rem;">Kontak & Legalitas</h3>
-                    <ul style="margin-bottom: 2rem;">
-                        <li style="display: flex; gap: 0.75rem; color: #d1d5db; margin-bottom: 0.5rem;">
-                            <i class="fas fa-map-marker-alt" style="margin-top: 0.25rem; color: #fbbf24;"></i>
-                            <span>Pekanbaru, Riau 28116</span>
-                        </li>
-                        <li style="display: flex; gap: 0.75rem; color: #d1d5db; margin-bottom: 0.5rem;">
-                            <i class="fas fa-phone" style="color: #fbbf24;"></i>
-                            <span>(0761) 123-4567</span>
-                        </li>
-                        <li style="display: flex; gap: 0.75rem; color: #d1d5db; margin-bottom: 1rem;">
-                            <i class="fas fa-envelope" style="color: #fbbf24;"></i>
-                            <span>info@dapenbankbrk.co.id</span>
-                        </li>
-                    </ul>
-
-                    <div class="compliance-group">
-
-                        <div class="compliance-item">
-                            <p>Terdaftar dan Diawasi Oleh:</p>
-                            <img src="image/logo-ojk.jpg" alt="OJK Logo" class="logo-img bg-white">
+                <div id="hak-kewajiban" class="tab-content active">
+                    <div class="card-grid">
+                        <div class="info-card">
+                            <h3><i class="fas fa-check-circle" style="color: #10b981;"></i> Hak Peserta</h3>
+                            <ul>
+                                <li>Menyampaikan pendapat dan saran mengenai perkembangan portofolio investasi</li>
+                                <li>Menerima <strong>Manfaat Pensiun Normal</strong> setelah mencapai usia pensiun</li>
+                                <li>Memperoleh <strong>Manfaat Pensiun Dipercepat</strong> sesuai ketentuan</li>
+                                <li>Mendapatkan <strong>Manfaat Pensiun Cacat</strong> bila mengalami cacat</li>
+                                <li>Hak atas <strong>Pensiun Ditunda</strong> dengan masa kepesertaan minimal 3 tahun</li>
+                                <li>Pengembalian <strong>iuran peserta + bunga</strong> untuk masa kepesertaan &lt; 3 tahun
+                                </li>
+                            </ul>
                         </div>
 
-                        <div class="compliance-item">
-                            <p>Terdaftar Sebagai Anggota:</p>
-                            <img src="image/adpi.jpg" alt="ADPI Logo" class="logo-img bg-white">
+                        <div class="info-card">
+                            <h3><i class="fas fa-exclamation-circle" style="color: #ef4444;"></i> Kewajiban Peserta</h3>
+                            <ul>
+                                <li>Membayar <strong>Iuran Peserta</strong> tepat waktu setiap bulan</li>
+                                <li>Memberikan data kepesertaan yang lengkap dan akurat</li>
+                                <li>Mendaftarkan Istri/Suami dan Anak yang sah</li>
+                                <li>Melaporkan setiap <strong>perubahan susunan keluarga</strong></li>
+                                <li>Mentaati Peraturan Dana Pensiun yang berlaku</li>
+                                <li>Bertanggung jawab atas <strong>kebenaran data</strong> yang diberikan</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="program" class="tab-content">
+                    <div class="info-box">
+                        <h3>Jenis Program</h3>
+                        <p>Jenis Dana Pensiun adalah <strong>Dana Pensiun Pemberi Kerja (DPPK)</strong> dengan Program:
+                            <strong>Program Pensiun Manfaat Pasti (PPMP)</strong>
+                        </p>
+                    </div>
+
+                    <h3 style="color: #1e3c72; margin: 30px 0 20px;">Jenis Manfaat Pensiun</h3>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Jenis Manfaat</th>
+                                <th>Deskripsi</th>
+                                <th>Usia Minimum</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Pensiun Normal (MPN)</td>
+                                <td>Manfaat bagi peserta yang pensiun pada usia normal</td>
+                                <td>56 tahun</td>
+                            </tr>
+                            <tr>
+                                <td>Pensiun Dipercepat (MPD)</td>
+                                <td>Manfaat bagi peserta yang pensiun sebelum usia normal</td>
+                                <td>46 tahun</td>
+                            </tr>
+                            <tr>
+                                <td>Pensiun Ditunda (PD)</td>
+                                <td>Hak yang ditunda pembayarannya hingga usia pensiun dipercepat</td>
+                                <td>Min. 46 tahun</td>
+                            </tr>
+                            <tr>
+                                <td>Pensiun Cacat (MPC)</td>
+                                <td>Manfaat bagi peserta yang mengalami cacat total dan tetap</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td>Pensiun Janda/Duda</td>
+                                <td>Manfaat setelah peserta/pensiunan meninggal dunia</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td>Pensiun Anak</td>
+                                <td>Manfaat setelah janda/duda kawin lagi atau meninggal</td>
+                                <td>-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="iuran" class="tab-content">
+                    <h3 style="color: #1e3c72; margin-bottom: 20px;">Struktur Iuran Pensiun</h3>
+
+                    <div class="card-grid">
+                        <div class="info-card">
+                            <h3>Iuran Normal Peserta</h3>
+                            <p style="margin: 15px 0;"><strong style="font-size: 32px; color: #fbbf24;">5%</strong> dari
+                                PhDP per bulan</p>
+                            <ul>
+                                <li>Dipungut langsung oleh Pemberi Kerja setiap bulan</li>
+                                <li>Berlaku sejak menjadi peserta hingga PHK/meninggal</li>
+                            </ul>
+                        </div>
+
+                        <div class="info-card">
+                            <h3>Iuran Normal Pemberi Kerja</h3>
+                            <p style="margin: 15px 0;">Selisih antara total iuran yang diperlukan dengan iuran peserta</p>
+                            <ul>
+                                <li>Dihitung berdasarkan Laporan Aktuaris terakhir</li>
+                                <li>Wajib disetorkan setiap bulan, selambatnya <strong>tanggal 15</strong> bulan berikutnya
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="syarat" class="tab-content">
+                    <h3 style="color: #1e3c72; margin-bottom: 20px;">Dokumen Syarat Pembayaran Manfaat Pensiun</h3>
+                    <ul class="custom-list">
+                        <li>Asli Kartu Peserta Dana Pensiun</li>
+                        <li>Fotokopi SK PHK</li>
+                        <li>Fotokopi Akte Nikah</li>
+                        <li>Fotokopi KTP</li>
+                        <li>Pas Foto Berwarna Peserta</li>
+                        <li>Fotokopi Kartu Keluarga (KK)</li>
+                        <li>Fotokopi NPWP</li>
+                        <li>Fotokopi Buku Rekening Bank/Tabungan</li>
+                        <li>Daftar Susunan Keluarga</li>
+                        <li>Nomor Telepon yang dapat dihubungi</li>
+                    </ul>
+                </div>
+
+                <div id="pengkinian" class="tab-content">
+                    <h3 class="section-title"><i class="fas fa-headset"></i> Layanan Pengaduan Peserta</h3>
+                    <p class="section-subtitle">Anda dapat melakukan pengaduan apabila terjadi kerugian finansial yang
+                        diduga karena kesalahan Dana Pensiun.</p>
+                </div>
+            </div>
+        </div>
+        <!-- Footer -->
+        <footer>
+            <div class="container">
+                <div class="footer-grid">
+
+                    <div class="footer-section">
+                        <h3>Tentang Kami</h3>
+                        <p style="color: #d1d5db; font-size: 0.95rem; line-height: 1.9;">
+                            Dana Pensiun Bank Riau Kepri memberikan jaminan kesejahteraan di masa pensiun dengan pengelolaan
+                            yang profesional dan transparan.
+                        </p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="footer-section">
+                        <h3>Tautan Cepat</h3>
+                        <ul>
+                            <li><a>Beranda</a></li>
+                            <li><a>Profil</a></li>
+                            <li><a>Kepesertaan</a></li>
+                            <li><a>Laporan</a></li>
+                            <li><a>Berita</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-section">
+                        <h3>Layanan</h3>
+                        <ul>
+                            <li><a>Program Pensiun</a></li>
+                            <li><a>Simulasi Manfaat</a></li>
+                            <li><a>Pengaduan</a></li>
+                            <li><a>FAQ</a></li>
+                            <li><a>Download Formulir</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-section">
+                        <h3 style="margin-bottom: 1rem;">Kontak & Legalitas</h3>
+                        <ul style="margin-bottom: 2rem;">
+                            <li style="display: flex; gap: 0.75rem; color: #d1d5db; margin-bottom: 0.5rem;">
+                                <i class="fas fa-map-marker-alt" style="margin-top: 0.25rem; color: #fbbf24;"></i>
+                                <span>Pekanbaru, Riau 28116</span>
+                            </li>
+                            <li style="display: flex; gap: 0.75rem; color: #d1d5db; margin-bottom: 0.5rem;">
+                                <i class="fas fa-phone" style="color: #fbbf24;"></i>
+                                <span>(0761) 123-4567</span>
+                            </li>
+                            <li style="display: flex; gap: 0.75rem; color: #d1d5db; margin-bottom: 1rem;">
+                                <i class="fas fa-envelope" style="color: #fbbf24;"></i>
+                                <span>info@dapenbankbrk.co.id</span>
+                            </li>
+                        </ul>
+
+                        <div class="compliance-group">
+                            <div class="compliance-item">
+                                <p>Terdaftar dan Diawasi Oleh:</p>
+                                <img src="{{ asset('image/logo-ojk.jpg') }}" alt="OJK Logo" class="logo-img bg-white">
+                            </div>
+
+                            <div class="compliance-item">
+                                <p>Terdaftar Sebagai Anggota:</p>
+                                <img src="{{ asset('image/adpi.jpg') }}" alt="ADPI Logo" class="logo-img bg-white">
+                            </div>
                         </div>
                     </div>
 
                 </div>
+
+                <div class="footer-bottom">
+                    <p>&copy; 2025 Dana Pensiun Bank Riau Kepri. All rights reserved.</p>
+                </div>
             </div>
-
-            <div class="footer-bottom">
-                <p>&copy; 2025 Dana Pensiun Bank Riau Kepri. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-    <script>
-        function openTab(evt, tabName) {
-            const tabContents = document.getElementsByClassName('tab-content');
-            for (let i = 0; i < tabContents.length; i++) {
-                tabContents[i].classList.remove('active');
+        </footer>
+        <script>
+            function openTab(evt, tabName) {
+                const tabContents = document.getElementsByClassName('tab-content');
+                for (let i = 0; i < tabContents.length; i++) {
+                    tabContents[i].classList.remove('active');
+                }
+                const tabBtns = document.getElementsByClassName('tab-btn');
+                for (let i = 0; i < tabBtns.length; i++) {
+                    tabBtns[i].classList.remove('active');
+                }
+                document.getElementById(tabName).classList.add('active');
+                evt.currentTarget.classList.add('active');
             }
+            document.addEventListener('DOMContentLoaded', () => {
+                document.querySelector('.tab-btn').click();
+            });
+        </script>
+    @endsection
 
-            const tabBtns = document.getElementsByClassName('tab-btn');
-            for (let i = 0; i < tabBtns.length; i++) {
-                tabBtns[i].classList.remove('active');
-            }
-
-            document.getElementById(tabName).classList.add('active');
-            evt.currentTarget.classList.add('active');
-        }
-
-        // Set default tab to active on load
-        document.addEventListener('DOMContentLoaded', (event) => {
-            document.querySelector('.tab-btn').click();
-        });
-    </script>
 </body>
 
 </html>
